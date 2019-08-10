@@ -1,0 +1,94 @@
+package br.univille.poo.programacaoestruturada.registro;
+
+public class HoraMinutoUtil {
+	
+
+	public static void acrescentaMinutos(HoraMinuto h, int minutos) {
+		h.minuto = h.minuto + minutos;
+		
+			while (h.minuto >= 60) {
+				h.minuto = h.minuto - 60;
+				acrescentaHoras(h, 1);		
+			}			
+	}
+	public static void acrescentaHoras (HoraMinuto h, int horas) {
+			h.hora = h.hora + horas;
+		while (h.hora > 23) {				
+				h.hora = h.hora - 24;
+				
+			}
+	}
+	
+	
+}
+
+
+////////////////////////////////////////////////////////////////////////
+
+package br.univille.poo.programacaoestruturada.registro;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+public class HoraMinutoUtilTests {
+	
+	@Test
+	public void acrescentaMinutos() {
+		HoraMinuto h = new HoraMinuto();
+		h.hora = 22;
+		h.minuto = 10;
+		HoraMinutoUtil.acrescentaMinutos(h, 12);
+		assertEquals("Hora e minutos sao iguais",22,h.minuto);
+	}
+	@Test
+	public void acrescentaMinutoseSomaHora() {
+		HoraMinuto h = new HoraMinuto();
+		h.hora = 10;
+		h.minuto = 55;
+		HoraMinutoUtil.acrescentaMinutos(h, 10);
+		assertEquals("Hora ",11,h.hora);
+		assertEquals("Minuto ",5,h.minuto);
+	}
+	
+	@Test
+	public void acrescentaMinutoseSoma2Horas() {
+		HoraMinuto h = new HoraMinuto();
+		h.hora = 10;
+		h.minuto = 10;
+		HoraMinutoUtil.acrescentaMinutos(h, 110);
+		assertEquals("A hora é ",12,h.hora);
+		assertEquals("E minutos ",0,h.minuto);
+	}
+	@Test
+	public void acrescentaMinutoseEVoltaPraMeiaNoite() {
+		HoraMinuto h = new HoraMinuto();
+		h.hora = 23;
+		h.minuto = 50;
+		HoraMinutoUtil.acrescentaMinutos(h, 10);
+		assertEquals("A hora é ",0,h.hora);
+		assertEquals("E minutos ",0,h.minuto);
+	}
+		
+	@Test
+	public void acrescentaMinutosNegativos() {
+		HoraMinuto h = new HoraMinuto();
+		h.hora = 8;
+		h.minuto = 40;
+		HoraMinutoUtil.acrescentaMinutos(h, -10);
+		assertEquals("A hora e os minutos:",30,h.minuto);
+	}
+	@Test
+	public void acrescentaMinutosNegativosEVoltaHora() {
+		HoraMinuto h = new HoraMinuto();
+		h.hora = 10;
+		h.minuto = 20;
+		HoraMinutoUtil.acrescentaHoras(h, -1);
+		HoraMinutoUtil.acrescentaMinutos(h, -40);
+		assertEquals("A hora é ",9,h.hora);
+		assertEquals("E minutos ",-20,h.minuto);
+	}
+	
+		
+
+}
